@@ -1,0 +1,10 @@
+{
+    "name": "zens",
+    "preferGlobal": "true",
+    "version": "0.0.1",
+    "author": "Jonas Ladenfors <jonas.ladenfors@gmail.com>",
+    "description": "a waste of time",    
+    "dependencies" : {
+        "mongodb"   :  "*"
+    }
+}
