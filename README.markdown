@@ -10,5 +10,9 @@ A schedular also fetches the latest kw/h price from prisjakt for Vattenfall.
 
 ### The first time
 
-Install Node/Redis/(MongoDb) and run "node index.js"
+Clone project
+
+Run "sudo npm install" to download dependencies 
+
+Run "node index.js"
 

@@ -1,17 +1,22 @@
 var app = require('http').createServer(handler), 
-  	fs = require('fs'), 
-  	temp = require('./jobs/tempJob'),
+  	fs = require('fs'),
+    TemperatureJob = require('./jobs/TemperatureJob').TemperatureJob,
   	el = require('./jobs/electricJob'), 
-  	price = require('./jobs/priceJob'), 
-  	path = require('path'); 
-  
+  	price = require('./jobs/priceJob'),
+    MyMongo = require('./db/mongoConnect').MyMongo,
+  	path = require('path');
+
+// Setup db connection
+var mdb = new MyMongo('127.0.0.1', 27017, 'zens');
+var tempJob = new TemperatureJob(mdb, '/mnt/1wire/28.434F99030000/temperature', 's1');
+
 app.listen(80);
 
 function handler (request, response) {
      
     var filePath = '.' + request.url;
     if (filePath == './')
-        filePath = './index.html';
+        filePath = './web/index.html';
 
     
     var extname = path.extname(filePath);
@@ -56,13 +61,12 @@ function handler (request, response) {
     }
     if (rest == '/getTemp'){
         response.writeHead(200, { 'Content-Type': 'application/json' });
-        response.write(temp.getTemp());
+        response.write(temp.getData());
         response.end();      
     }
 }
 
-temp.start();
-temp.getAggregate();
+tempJob.start();
 el.start();
 el.getAggregate();
 price.start();

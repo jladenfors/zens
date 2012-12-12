@@ -5,6 +5,10 @@
     "author": "Jonas Ladenfors <jonas.ladenfors@gmail.com>",
     "description": "a waste of time",    
     "dependencies" : {
-        "mongodb"   :  "*"
+        "mongodb"   :  "*",
+        "redis"     : "*",
+        "redis-jsonify"     : "*",
+        "ahr2" : "*",
+        "jsdom" : "*"
     }
 }

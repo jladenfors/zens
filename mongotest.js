@@ -1,13 +1,13 @@
 var MyMongo = require('./db/mongoConnect').MyMongo;
 
+var mdb = new MyMongo('127.0.0.1', 27017, 'zens');
 
-var db = new MyMongo('localhost', 9000, 'db1');
-
-db.query('temperature', function(collection) {
+mdb.query('temperature', function(collection) {
     collection.insert({hello:'new connector pool'});
 });
 
-
-db.query('electricity', function(collection) {
+mdb.query('electricity', function(collection) {
     collection.insert({hello:'new connector pool 2'});
-});
+});    
+    
+
