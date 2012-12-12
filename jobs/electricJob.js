@@ -1,48 +1,55 @@
 var fs = require('fs');
-var redis = require('../redisConnector');
 
-var key = 'elMonth';
-var queue = 'monthE1';
-var oneWireMnt = '/mnt/1wire/1D.4D8B0F000000/counters.A';
-var respData = {};
+/**
+ * Read the electric sensor 
+ */
+function ElectricJob(mdb, sensorPath, sensorId){
+    var self = this;
+    this.mdb = mdb;
+    this.sensorPath = sensorPath;
+    this.sensorId = sensorId;
+    this.price = 0;
+    this.interval =  5*60000;
+    this.respData = {};
 
-function start(){
-    setInterval(function() {fs.readFile(oneWireMnt, 'utf-8' ,function (err, data)
-    {
-        var client = redis.connect().on("connect", function(){
-            client.incr( 'nextid'+key , function( err, id ) {
-                client.hset(key, id, { date: Math.round(new Date().getTime() / 1000).toString() , data: data.trim()});
-                client.expire(key, 30*24*60*60);
-                client.quit();
-            });
-        });
-    });
-        getAggregate();
-    }, 5*60000); // every 5 minutes
-
-    console.log('Electric job started');
-}
-
-function getAggregate(){
-    var client = redis.connect().on("connect",
-        function()
-        {
-            var price;
-            client.get('price', function(err, data){price = data;});
-            client.hvals(key,
-                function(err, res)
-                {
-                    respData.price = price;
-                    respData.res = res;
+    this.getAggregate = (
+        function(){
+            self.mdb.query('price',
+                function(collection) {
+                    self.respData.price = collection.find(
+                        {
+                            date: { $gt: ISODate("2012-01-01T00:00:00.000Z")}
+                        }
+                    );
+                });
+            self.mdb.query('electric',
+                function(collection) {
+                    self.respData.res = collection.find(
+                        {
+                            date: { $gt: ISODate("2012-01-01T00:00:00.000Z")}
+                        }
+                    );
                 });
         });
 }
 
-function getElectric(){
-    return JSON.stringify(respData);
-}
+ElectricJob.prototype.start = function(){
+    setInterval(function() {
+        fs.readFile(this.sensorPath, 'utf-8' ,function (err, data)
+        {
+            self.mdb.query('temperature',
+                function(collection) {
+                    collection.insert({sensorId: this.sensorId, date: Math.round(new Date().getTime() / 1000) , data: data.trim()});
+                });         
+        });
+        this.getAggregate();
+    }, this.interval); 
+    console.log('Electric job started');
+};
 
-exports.start = start;
-exports.getAggregate = getAggregate;
-exports.getElectric = getElectric;
+ElectricJob.prototype.getElectric = function(){
+    return JSON.stringify(this.respData);
+};
+
+exports.ElectricJob = ElectricJob;
 
