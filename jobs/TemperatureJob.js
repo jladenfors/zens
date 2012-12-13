@@ -19,7 +19,7 @@ function TemperatureJob(mdb, sensorPath, sensorId){
                 function(collection) {
                     self.respData = collection.find(
                         {
-                            date: { $gt: ISODate("2012-01-01T00:00:00.000Z")}
+                            date: { $gt: new Date("2012-01-01T00:00:00.000Z")}
                         }                        
                     );
                 });
@@ -29,23 +29,23 @@ function TemperatureJob(mdb, sensorPath, sensorId){
 
 TemperatureJob.prototype.start = (function (){
     // Get initial data.
-    this.getAggregate();
-    console.log('the value ' + this.sensorPath );
+    var parent = this;
     setInterval(
         function() {
-            fs.readFile(this.sensorPath, 'utf-8' ,function (err, data)
+            fs.readFile(parent.sensorPath, 'utf-8' ,function (err, data)
             {
-                this.mdb.query('temperature',
+                parent.mdb.query('temperature',
                     function(collection) {
-                        collection.insert({sensorId: this.sensorId, date: Math.round(new Date().getTime() / 1000) , data: data.trim()});
+                        collection.insert({sensorId: parent.sensorId, date: Math.round(new Date().getTime() / 1000) , data: data.trim()});
                     });
-                this.getAggregate();
+                parent.getAggregate();
             });
-        }, this.interval);
+        }, parent.interval);
     console.log('Temperature job started');
 });
 
 TemperatureJob.prototype.getData = function() {
+    console.log(this.respData);
     return JSON.stringify(this.respData);
 };
 
