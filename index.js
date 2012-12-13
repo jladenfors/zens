@@ -1,8 +1,8 @@
 var app = require('http').createServer(handler), 
   	fs = require('fs'),
     TemperatureJob = require('./jobs/TemperatureJob').TemperatureJob,
-    ElectricJob = require('./jobs/electricJob').ElectricJob,
-    PriceJob = require('./jobs/priceJob').PriceJob,
+    ElectricJob = require('./jobs/ElJob').ElectricJob,
+    PriceJob = require('./jobs/PriceParserJob').PriceJob,
     MyMongo = require('./db/mongoConnect').MyMongo,
   	path = require('path');
 

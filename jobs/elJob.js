@@ -16,27 +16,31 @@ function ElectricJob(mdb, sensorPath, sensorId){
         function(){
             self.mdb.query('price',
                 function(collection) {
-                    self.respData.price = collection.find(
+                    collection.find(
                         {
                             date: { $gt: new Date("2012-01-01T00:00:00.000Z")}
                         }
-                    );
+                    ).sort([['date', 1]])
+                        .toArray(function(err, docs) {
+                             self.respData.price = docs;
+                        });
                 });
             self.mdb.query('electric',
                 function(collection) {
-                    self.respData.res = collection.find(
+                    collection.find(
                         {
                             date: { $gt: new Date("2012-01-01T00:00:00.000Z")}
                         }
-                    );
+                    ).sort([['date', 1]])
+                        .toArray(function(err, docs) {
+                            self.respData.res = docs;
+                        });
                 });
         });
 }
 
-ElectricJob.prototype.start = function(){
-	
+ElectricJob.prototype.start = function(){	
     var parent = this;
-
     setInterval(function() {
         fs.readFile(parent.sensorPath, 'utf-8' ,function (err, data)
         {

@@ -17,11 +17,14 @@ function TemperatureJob(mdb, sensorPath, sensorId){
         function(){
             self.mdb.query('temperature',
                 function(collection) {
-                    self.respData = collection.find(
+                    collection.find(
                         {
                             date: { $gt: new Date("2012-01-01T00:00:00.000Z")}
                         }                        
-                    );
+                    ).sort([['date', 1]])
+                        .toArray(function(err, docs) {
+                            self.respData = docs;
+                        });
                 });
         });
 

@@ -28,8 +28,7 @@ function MyMongo(host, port, dbname) {
 }
 
 MyMongo.prototype.query = function(collectionName, callback) {    
-    if (this.db != undefined) {
-        console.log('test');
+    if (this.db != undefined) {        
         var collection = new mongodb.Collection(this.db, collectionName);
         callback(collection);
         return;
