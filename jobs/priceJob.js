@@ -2,10 +2,9 @@ var searcher = require('../js/searcher-compricer');
 var redis = require('../redisConnector');
 
 
-function PriceJob(mdb, sensorPath, sensorId){
+function PriceJob(mdb,sensorId){
     var self = this;
-    this.mdb = mdb;
-    this.sensorPath = sensorPath;
+    this.mdb = mdb;    
     this.sensorId = sensorId;
     this.key = 'price';
     this.queue = 'priceQ';

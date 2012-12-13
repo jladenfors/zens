@@ -5,13 +5,13 @@ var fs = require('fs');
  * 
  * todo setup jobs as a separate node instance which system cron controls.
  */
-function TemperatureJob(mdb, sensorPath, sensorId){
-    var self = this;
+function TemperatureJob(mdb, sensorPath, sensorId){    
     this.mdb = mdb;
     this.sensorPath = sensorPath;
     this.sensorId = sensorId;        
     this.interval =  5*60000;
     this.respData = {};
+    var self = this;
     
     this.getAggregate = (
         function(){
@@ -30,12 +30,12 @@ function TemperatureJob(mdb, sensorPath, sensorId){
 TemperatureJob.prototype.start = (function (){
     // Get initial data.
     this.getAggregate();
-    
+    console.log('the value ' + this.sensorPath );
     setInterval(
         function() {
             fs.readFile(this.sensorPath, 'utf-8' ,function (err, data)
             {
-                self.mdb.query('temperature',
+                this.mdb.query('temperature',
                     function(collection) {
                         collection.insert({sensorId: this.sensorId, date: Math.round(new Date().getTime() / 1000) , data: data.trim()});
                     });

@@ -10,7 +10,7 @@ var app = require('http').createServer(handler),
 var mdb = new MyMongo('127.0.0.1', 27017, 'zens');
 var tempJob = new TemperatureJob(mdb, '/mnt/1wire/28.434F99030000/temperature', 'temp1');
 var elJob = new ElectricJob(mdb, '/mnt/1wire/1D.4D8B0F000000/counters.A', 'el1');
-var priceJob = new PriceJob(mdb, '/mnt/1wire/1D.4D8B0F000000/counters.A', 'price1');
+var priceJob = new PriceJob(mdb, 'price1');
 
 app.listen(80);
 
