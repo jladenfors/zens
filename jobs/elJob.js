@@ -44,7 +44,7 @@ ElectricJob.prototype.start = function(){
     setInterval(function() {
         fs.readFile(parent.sensorPath, 'utf-8' ,function (err, data)
         {
-            parent.mdb.query('temperature',
+            parent.mdb.query('electric',
                 function(collection) {
                     collection.insert({sensorId: parent.sensorId, date: Math.round(new Date().getTime() / 1000) , data: data.trim()});
                 });         
