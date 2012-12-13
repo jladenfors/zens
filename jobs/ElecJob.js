@@ -39,7 +39,7 @@ function ElectricJob(mdb, sensorPath, sensorId){
         });
 }
 
-ElectricJob.prototype.start = function(){	
+ElectricJob.prototype.start = function(){
     var parent = this;
     setInterval(function() {
         fs.readFile(parent.sensorPath, 'utf-8' ,function (err, data)
