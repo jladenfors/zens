@@ -24,7 +24,7 @@ function Zens() {
             success: function(data){
                 data.forEach(
                     function (reply, i) {
-                        var json = JSON.parse(reply);
+                        var json = reply;
                         var d = that.zDate(json);
                         if (new Date().getDate() == d.getDate()){
                             temphourHash[d.getTime()] = parseFloat(json.data).toFixed(1);                            
@@ -49,7 +49,7 @@ function Zens() {
 
                 data.res.forEach(
                     function (reply, i) {
-                        var json = JSON.parse(reply);
+                        var json = reply;
                         var eventDate = that.zDate(json);
                         //var eventDate = new Date(0);
                         //eventDate.setUTCSeconds(json.date);
@@ -127,7 +127,6 @@ function Zens() {
         jQuery.each(sortedKeys, function(keyVal){
             var zd = new Date(0);
             zd.setTime(parseFloat(sortedKeys[keyVal]));
-            console.log("asdf");    
             if (zd.getHours() != oldZd.getHours()){
                 
                 sortedValues[j++] = [parseFloat(sortedKeys[keyVal]), parseFloat(map[sortedKeys[keyVal]] - map[sortedKeys[keyValOld]])];
@@ -151,7 +150,6 @@ function Zens() {
     this.zensSort = function(hashMap) {
         return Object.keys(hashMap).sort(
             function(a,b){
-                console.log(a + " . "  + b);
                 return  a - b;
             }
         );
