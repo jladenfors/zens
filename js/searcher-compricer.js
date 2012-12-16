@@ -16,7 +16,6 @@ searcher.parseHTML = function(window) {
  	$(".rightcell_order_subscription_detailWeb2 a").each(
  		function() { 						 
  			 price = parseFloat($(this).text().split('ö')[0]) / 100;
-			 console.log($(this).text().split('ö')[0]);
     	}
     );     
     return price;   
