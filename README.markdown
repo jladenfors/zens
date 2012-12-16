@@ -3,16 +3,17 @@ Zens
 
 WORK IN PROGRESS... 
 
-Small interface for my one-wire temperature and electricity measurements. It is written in 
-Javascript and runs on Node and Redis/(MongoDb) on my Raspberry Pi.
+Small one-wire sensor software for my temperature and electricity measurements. It is written in 
+Javascript and runs on Node and MongoDb on my Raspberry Pi.
 
-A schedular also fetches the latest kw/h price from prisjakt for Vattenfall. 
+### TODO
+Write jasmine tests
+Separate jobs from  application
+Make graphs for > 1 month durations
+Buy raspberry camera and connect ;)
 
-### The first time
-
+### Run it! 
 Clone project
-
 Run "sudo npm install" to download dependencies 
-
-Run "node index.js"
-
+Start your mongodb instance
+Run "sudo node index.js"
