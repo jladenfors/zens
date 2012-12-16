@@ -1,7 +1,7 @@
 var app = require('http').createServer(handler), 
   	fs = require('fs'),
     TemperatureJob = require('./jobs/TemperatureJob').TemperatureJob,
-    ElectricJob = require('./jobs/ElevJob').ElectricJob,
+    ElectricJob = require('./jobs/ElecJob').ElectricJob,
     PriceJob = require('./jobs/PriceParserJob').PriceJob,
     MyMongo = require('./db/mongoConnect').MyMongo,
   	path = require('path');
@@ -58,12 +58,12 @@ function handler (request, response) {
     var rest = request.url.split('?')[0];
     if (rest == '/getEl'){
         response.writeHead(200, { 'Content-Type': 'application/json' });
-        response.write(elJob.getElectric());        
+        response.write(elJob.getAggregate());        
         response.end();
     }
     if (rest == '/getTemp'){
         response.writeHead(200, { 'Content-Type': 'application/json' });
-        response.write(tempJob.getData());
+        response.write(tempJob.getAggregate());
         response.end();      
     }
 }
