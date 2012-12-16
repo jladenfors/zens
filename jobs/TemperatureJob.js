@@ -19,13 +19,14 @@ function TemperatureJob(mdb, sensorPath, sensorId){
                 function(collection) {
                     collection.find(
                         {
-                            date: { $gt: new Date("2012-01-01T00:00:00.000Z")}
+                            date: { $gt: 0 }
                         }                        
                     ).sort([['date', 1]])
                         .toArray(function(err, docs) {
                             self.respData = docs;
                         });
                 });
+		return JSON.stringify(self.respData);
         });
 
 }
@@ -46,11 +47,5 @@ TemperatureJob.prototype.start = (function (){
         }, parent.interval);
     console.log('Temperature job started');
 });
-
-TemperatureJob.prototype.getData = function() {
-    console.log(this.respData);
-    return JSON.stringify(this.respData);
-};
-
 
 exports.TemperatureJob = TemperatureJob;

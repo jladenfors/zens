@@ -13,9 +13,9 @@ function PriceJob(mdb,sensorId){
         searcher.search();
         console.log('Price job started');
         searcher.on('complete', function(data){
-            console.log('searcher done!' + data);
             self.mdb.query('price',
                 function(collection) {
+		    console.log("price data " + data);
                     collection.insert({sensorId: self.sensorId, date: Math.round(new Date().getTime() / 1000) , data: data});
                 });
         });

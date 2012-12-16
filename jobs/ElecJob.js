@@ -16,26 +16,26 @@ function ElectricJob(mdb, sensorPath, sensorId){
         function(){
             self.mdb.query('price',
                 function(collection) {
-                    collection.find(
+                    collection.findOne(
                         {
-                            date: { $gt: new Date("2012-01-01T00:00:00.000Z")}
+                            date: { $gt: 0}
                         }
-                    ).sort([['date', 1]])
-                        .toArray(function(err, docs) {
-                             self.respData.price = docs;
-                        });
-                });
+                    , function(err, doc) {
+			self.respData.price = doc;
+			})
+		  });              
             self.mdb.query('electric',
                 function(collection) {
                     collection.find(
                         {
-                            date: { $gt: new Date("2012-01-01T00:00:00.000Z")}
+                            date: { $gt: 0}
                         }
                     ).sort([['date', 1]])
                         .toArray(function(err, docs) {
                             self.respData.res = docs;
                         });
-                });
+                });	
+		return JSON.stringify(self.respData);
         });
 }
 
@@ -52,10 +52,6 @@ ElectricJob.prototype.start = function(){
         parent.getAggregate();
     }, parent.interval); 
     console.log('Electric job started');
-};
-
-ElectricJob.prototype.getElectric = function(){
-    return JSON.stringify(this.respData);
 };
 
 exports.ElectricJob = ElectricJob;
