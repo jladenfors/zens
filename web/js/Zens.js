@@ -5,10 +5,10 @@
  *
  * Start by calling setup!
  */
-require(["jquery.flot", "zensFlot"], function Zens() {
+function Zens() {
     var timeHash = zensTimeHash();
 
-    (function() {
+    this.setup = function() {
         // get handle to outer object
         var that = this;
 
@@ -68,12 +68,12 @@ require(["jquery.flot", "zensFlot"], function Zens() {
                 // Present daily price 
                 document.getElementById('price').innerHTML = "Compricer: " + data.price + " Kr/h";
                 document.getElementById('currprice').innerHTML = "Totalt idag: " +  that.priceCalculus(data.price, elhourDelta).toPrecision(2) + " Kr";
-                document.getElementById('monthprice').innerHTML = "Totalt denna månad: " +  that.priceCalculus(data.price, eldayDelta).toPrecision(6) + " Kr";
+                document.getElementById('monthprice').innerHTML = "Totalt denna mŒnad: " +  that.priceCalculus(data.price, eldayDelta).toPrecision(6) + " Kr";
             }
         });
 
         that.drawTempGraph(that.orderHashSets(temphourHash), elhourDelta, that.orderHashSets(tempdayHash),eldayDelta );
-    })();
+    };
 
     this.drawTempGraph = function(tempDaily, elDaily, tempMonthly, elMonthly){
         zensPlot([tempDaily, elDaily], $("#elGraph"), ["C", "Kw/h"], [1, "hour"], "%H", timeHash.today, timeHash.tomorrow, 0, 30);
@@ -164,5 +164,4 @@ require(["jquery.flot", "zensFlot"], function Zens() {
 
     this.formatDay = function (d ){ return (d.getDate() < 9) ? "0" + d.getDate() : d.getDate();};
 
-
-});
+}

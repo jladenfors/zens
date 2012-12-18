@@ -5,7 +5,7 @@ angular.module('zens', []).
             transclude: true,
             scope: {},
             controller: {},
-            templateUrl: 'partial/head.html',
+            templateUrl: '/web/partial/head.html',
             replace: true
         };
     }).
@@ -15,7 +15,7 @@ angular.module('zens', []).
             transclude: true,
             scope: {},
             controller: {},
-            templateUrl: 'partial/nav.html',
+            templateUrl: '/web/partial/nav.html',
             replace: true
         };
     }).
@@ -29,7 +29,7 @@ angular.module('zens', []).
                     $scope.apa = 'asdf';
 
                 },
-            templateUrl: 'partial/graf.html',
+            templateUrl: '/web/partial/graf.html',
             replace: true
         };
     });
