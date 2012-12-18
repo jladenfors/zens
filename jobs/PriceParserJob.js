@@ -1,5 +1,4 @@
 var searcher = require('../js/searcher-compricer');
-var redis = require('../redisConnector');
 
 
 function PriceJob(mdb,sensorId){
