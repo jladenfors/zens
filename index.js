@@ -18,7 +18,7 @@ function handler (request, response) {
      
     var filePath = '.' + request.url;
     if (filePath == './')
-        filePath = './web/index.html';
+        filePath = './web/index_old.html';
 
     
     var extname = path.extname(filePath);

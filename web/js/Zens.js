@@ -5,10 +5,10 @@
  *
  * Start by calling setup!
  */
-function Zens() {
+require(["jquery.flot", "zensFlot"], function Zens() {
     var timeHash = zensTimeHash();
 
-    this.setup = function() {
+    (function() {
         // get handle to outer object
         var that = this;
 
@@ -73,7 +73,7 @@ function Zens() {
         });
 
         that.drawTempGraph(that.orderHashSets(temphourHash), elhourDelta, that.orderHashSets(tempdayHash),eldayDelta );
-    };
+    })();
 
     this.drawTempGraph = function(tempDaily, elDaily, tempMonthly, elMonthly){
         zensPlot([tempDaily, elDaily], $("#elGraph"), ["C", "Kw/h"], [1, "hour"], "%H", timeHash.today, timeHash.tomorrow, 0, 30);
@@ -164,4 +164,5 @@ function Zens() {
 
     this.formatDay = function (d ){ return (d.getDate() < 9) ? "0" + d.getDate() : d.getDate();};
 
-}
+
+});
