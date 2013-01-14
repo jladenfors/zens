@@ -50,10 +50,7 @@ function Zens() {
                 data.res.forEach(
                     function (reply, i) {
                         var json = reply;
-                        var eventDate = that.zDate(json);
-                        //var eventDate = new Date(0);
-                        //eventDate.setUTCSeconds(json.date);
-
+                        var eventDate = that.zDate(json);           
                         if (new Date().getDate() == eventDate.getDate()){                            
                             elhourHash[eventDate.getTime()] = json.data/1000;
                         }
@@ -68,7 +65,7 @@ function Zens() {
                 // Present daily price 
                 document.getElementById('price').innerHTML = "Compricer: " + data.price + " Kr/h";
                 document.getElementById('currprice').innerHTML = "Totalt idag: " +  that.priceCalculus(data.price, elhourDelta).toPrecision(2) + " Kr";
-                document.getElementById('monthprice').innerHTML = "Totalt denna mŒnad: " +  that.priceCalculus(data.price, eldayDelta).toPrecision(6) + " Kr";
+                document.getElementById('monthprice').innerHTML = "Totalt denna mï¿½nad: " +  that.priceCalculus(data.price, eldayDelta).toPrecision(6) + " Kr";
             }
         });
 

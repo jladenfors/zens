@@ -1,7 +1,7 @@
-var fs = require('fs');
+var fs = require('fs'), SysConf = require('../js/system_conf').SystemConf;
 
 /**
- * Read the electric sensor 
+ * Read the electric sensor, this to be invoked using "new"
  */
 function ElectricJob(mdb, sensorPath, sensorId){
     var self = this;
@@ -12,31 +12,51 @@ function ElectricJob(mdb, sensorPath, sensorId){
     this.interval =  5*60000;
     this.respData = {};
 
-    this.getAggregate = (
-        function(){
-            self.mdb.query('price',
-                function(collection) {
-                    collection.findOne(
-                        {
-                            date: { $gt: 0}
-                        }
+    this.getPrice = function(success){
+        self.mdb.query('price',
+            function(collection) {
+                collection.findOne(
+                    {
+                        date: { $gt: 0}
+                    }
                     , function(err, doc) {
-			self.respData.price = doc;
-			})
-		  });              
-            self.mdb.query('electric',
-                function(collection) {
-                    collection.find(
-                        {
-                            date: { $gt: 0}
-                        }
-                    ).sort([['date', 1]])
-                        .toArray(function(err, docs) {
-                            self.respData.res = docs;
-                        });
-                });	
-		return JSON.stringify(self.respData);
-        });
+                        self.respData.price = doc;
+                        success;
+                    })
+            });
+    }
+
+    this.getElectric = function(success){
+        self.mdb.query(SysConf.eldb,
+            function(collection) {
+                collection.find(
+                    {
+                        date: { $gt: 0}
+                    }
+                ).sort([['date', 1]])
+                    .toArray(function(err, docs) {
+                        self.respData.res = docs;
+                        success();
+                    });
+            });
+    }
+
+    this.getAggregate = function(success){
+        self.getPrice(
+            self.getElectric(
+                function(){
+                    success(self.respData);
+                }
+            )
+        );
+    };
+
+    this.insertData = function(data){
+        self.mdb.query(SysConf.eldb,
+            function(collection) {
+                collection.insert({sensorId: self.sensorId, date: Math.round(new Date().getTime() / 1000) , data: data.trim()});
+            });
+    }
 }
 
 ElectricJob.prototype.start = function(){
@@ -44,13 +64,9 @@ ElectricJob.prototype.start = function(){
     setInterval(function() {
         fs.readFile(parent.sensorPath, 'utf-8' ,function (err, data)
         {
-            parent.mdb.query('electric',
-                function(collection) {
-                    collection.insert({sensorId: parent.sensorId, date: Math.round(new Date().getTime() / 1000) , data: data.trim()});
-                });         
+            parent.insertData(data);
         });
-        parent.getAggregate();
-    }, parent.interval); 
+    }, parent.interval);
     console.log('Electric job started');
 };
 

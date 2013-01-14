@@ -4,13 +4,13 @@ var mongodb = require('mongodb');
  * http://stackoverflow.com/questions/10108170/node-js-reuse-mongodb-reference
  */
 
-function MyMongo(host, port, dbname) {
+function MyMongo(host, port, dbname, onConnect) {
     this.host = host;
     this.port = port;
     this.dbname = dbname;
     this.db = undefined;
     var self = this;
-
+    
     this.server = new mongodb.Server(
         this.host,
         this.port,
@@ -24,14 +24,18 @@ function MyMongo(host, port, dbname) {
             return;
         }
         self.db = db;
+        onConnect();
     });
+    
 }
 
 MyMongo.prototype.query = function(collectionName, callback) {    
-    if (this.db != undefined) {        
+    if (this.db != undefined) {                
         var collection = new mongodb.Collection(this.db, collectionName);
         callback(collection);
         return;
+    }else{
+        console.log("Error connection to db");
     }
 }
 

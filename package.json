@@ -9,6 +9,10 @@
         "redis"     : "*",
         "redis-jsonify"     : "*",
         "ahr2" : "*",
-        "jsdom" : "*"
+        "jsdom" : "*",
+	"mocha" : "*"
+    },
+    "scripts" : {
+	"test" : "mocha -R teamcity"
     }
 }
