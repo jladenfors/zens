@@ -1,80 +1,24 @@
-var app = require('http').createServer(handler),
-    fs = require('fs'),
+var http = require('http'),
+    zens_http = require('./js/zens_http_server').ZensHttp,    
     TemperatureJob = require('./jobs/TemperatureJob').TemperatureJob,
     ElectricJob = require('./jobs/ElecJob').ElectricJob,
     PriceJob = require('./jobs/PriceParserJob').PriceJob,
-    MyMongo = require('./db/mongoConnect').MyMongo,
-    path = require('path');
+    MyMongo = require('./db/mongoConnect').MyMongo;
+    
 
-// Setup db connection
+
 var mdb = new MyMongo('127.0.0.1', 27017, 'zens',
     function(){
         var tempJob = new TemperatureJob(mdb, "/mnt/1wire/28.434F99030000/temperature", 'temp1');
         var elJob = new ElectricJob(mdb, "/mnt/1wire/1D.4D8B0F000000/counters.A", 'el1');
         var priceJob = new PriceJob(mdb, 'price1');
+        zens_http.setJobs(elJob, tempJob);
+        http.createServer(zens_http.httpServer).listen(8220);
         tempJob.start();
         elJob.start();
-        priceJob.start();
-        app.listen(80);
+        //   priceJob.start();
+        console.log('Application started!')    
+     
     }
-);
-
-function handler (request, response) {
-
-    var filePath = '.' + request.url;
-    if (filePath == './')
-        filePath = './web/index.html';
-
-
-    var extname = path.extname(filePath);
-    var contentType = 'text/html';
-    switch (extname) {
-        case '.js':
-            contentType = 'text/javascript';
-            break;
-        case '.css':
-            contentType = 'text/css';
-            break;
-        case '.png':
-            contentType = 'image/png';
-            break;
-    }
-
-    fs.exists(filePath, function(exists) {
-
-        if (exists) {
-            fs.readFile(filePath, function(error, content) {
-                if (error) {
-                    response.writeHead(500);
-                    response.end();
-                }
-                else {
-                    response.writeHead(200, { 'Content-Type': contentType });
-                    response.end(content, 'utf-8');
-                }
-            });
-        }
-        else {
-            response.writeHead(404);
-            response.end();
-        }
-    });
-
-    var rest = request.url.split('?')[0];
-    if (rest == '/getEl'){
-        elJob.getAggregate(
-            function(it){
-                response.writeHead(200, { 'Content-Type': 'application/json' });
-                response.write(JSON.stringify(it));
-                response.end();
-            }
-        );
-    }
-    if (rest == '/getTemp'){
-        response.writeHead(200, { 'Content-Type': 'application/json' });
-        response.write(tempJob.getAggregate());
-        response.end();
-    }
-}
-
+)
 
