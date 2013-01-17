@@ -8,7 +8,7 @@ function PriceJob(mdb,sensorId){
     this.key = 'price';
     this.queue = 'priceQ';
 
-    this.start = function() {        
+    this.run = function() {        
         searcher.search();
         console.log('Price job started');
         searcher.on('complete', function(data){
@@ -18,6 +18,10 @@ function PriceJob(mdb,sensorId){
                     collection.insert({sensorId: self.sensorId, date: Math.round(new Date().getTime() / 1000) , data: data});
                 });
         });
+    }
+    
+    return {
+        start : this.run
     }
 }
 

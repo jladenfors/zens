@@ -2,12 +2,10 @@ var path = require('path'), fs = require('fs');
 
 function zens_http_server(){
     
-    var tempJob = "";
-    var elJob = "";
+    var zensFetcher;    
     
-    this.setJobs = function(v_elJob, v_tempJob){        
-        tempJob = v_tempJob;
-        elJob = v_elJob;    
+    this.sensorFetcher = function(p_zensFetcher){
+        zensFetcher = p_zensFetcher;        
     }
 
     this.zens_http = function(request, response) {
@@ -52,7 +50,7 @@ function zens_http_server(){
 
         var rest = request.url.split('?')[0];
         if (rest == '/getEl'){
-            elJob.getAggregate(
+            zensFetcher.get_e1(
                 function(it){
                     response.writeHead(200, { 'Content-Type': 'application/json' });
                     response.write(JSON.stringify(it));
@@ -62,14 +60,14 @@ function zens_http_server(){
         }
         if (rest == '/getTemp'){
             response.writeHead(200, { 'Content-Type': 'application/json' });
-            response.write(tempJob.getAggregate());
+            response.write(zensFetcher.get_t1());
             response.end();
         }        
     }
     
     return {
         httpServer: this.zens_http,
-        setJobs: this.setJobs
+        sensorFetcher: this.sensorFetcher
     };
 }
 
