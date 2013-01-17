@@ -1,4 +1,4 @@
-function system_conf() {
+function SystemConf() {
     
     this.props = {
         electric_db : 'electric',
@@ -7,7 +7,7 @@ function system_conf() {
         temperature_sensor_id1 : 't1',
         m_schema : 'zens',
         m_url : '127.0.0.1',
-        m_port : '27017'
+        m_port : 27017
     }
     
     this.getData = function (key){        
@@ -25,4 +25,4 @@ function system_conf() {
     }   
 }
 
-exports.SystemConf = system_conf();
+exports.SystemConf = SystemConf();

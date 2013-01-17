@@ -2,7 +2,7 @@ var TemperatureJob = require('./jobs/TemperatureJob').TemperatureJob,
     ElectricJob = require('./jobs/ElecJob').ElectricJob,
     PriceJob = require('./jobs/PriceParserJob').PriceJob,
     MyMongo = require('./db/mongoConnect').MyMongo
-    SysConf = require('js/system_conf').SystemConf;
+    SysConf = require('./js/system_conf').SystemConf;
 
 
 /**
