@@ -30,7 +30,8 @@ function ElectricJob(mdb, sensorPath, sensorId){
     }
     
     return {
-        start: this.run
+        start: this.run,
+        insertData: this.insertData
     }
 }
 
