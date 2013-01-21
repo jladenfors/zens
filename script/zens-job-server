@@ -1,24 +1,13 @@
 #!/bin/bash
-### BEGIN INIT INFO
-# Provides:          start-node
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: Example initscript
-# Description:       This file should be used to construct scripts to be
-#                    placed in /etc/init.d.
-### END INIT INFO
 
 DAEMON_PATH="/home/pi/site/zens/"
+DAEMON="/usr/local/bin/node" 
+DAEMONOPTS="zens_job_runner.js"
 
-DAEMON=sudo
-DAEMONOPTS="/usr/local/bin/node zens_server.js"
-
-NAME=node-server
-DESC="Runs zens"
+NAME=Zens-job-runner
+DESC="Run zens job runner"
 PIDFILE=/var/run/$NAME.pid
-LOGFILE=/var/log/zens.log
+LOGFILE=/var/log/zens_jobs.log
 SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
