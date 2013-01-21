@@ -12,7 +12,7 @@ var http = require('http'),
 var mdb = new MyMongo('127.0.0.1', 27017, 'zens',
     function(){        
         zens_http.sensorFetcher(new ZensBackend(mdb));
-        http.createServer(zens_http.httpServer).listen(8220);
+        http.createServer(zens_http.httpServer).listen(80);
         console.log('Application started!')         
     }
 )
