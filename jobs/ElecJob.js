@@ -21,7 +21,7 @@ function ElectricJob(mdb, sensorPath, sensorId){
 
     this.run = function() {        
         setInterval(function() {
-            fs.readFile(parent.sensorPath, 'utf-8' ,function (err, data)
+            fs.readFile(self.sensorPath, 'utf-8' ,function (err, data)
             {
                 self.insertData(data);
             });
