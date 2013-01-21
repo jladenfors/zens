@@ -10,25 +10,7 @@ function TemperatureJob(mdb, sensorPath, sensorId){
     this.sensorPath = sensorPath;
     this.sensorId = sensorId;        
     this.interval =  5*60000;
-    this.respData = {};
-    var self = this;
-    
-    this.getAggregate = (
-        function(){
-            self.mdb.query('temperature',
-                function(collection) {
-                    collection.find(
-                        {
-                            date: { $gt: 0 }
-                        }                        
-                    ).sort([['date', 1]])
-                        .toArray(function(err, docs) {
-                            self.respData = docs;
-                        });
-                });
-		return JSON.stringify(self.respData);
-        });
-
+    this.respData = {};       
 }
 
 TemperatureJob.prototype.start = (function (){
@@ -41,8 +23,7 @@ TemperatureJob.prototype.start = (function (){
                 parent.mdb.query('temperature',
                     function(collection) {
                         collection.insert({sensorId: parent.sensorId, date: Math.round(new Date().getTime() / 1000) , data: data.trim()});
-                    });
-                parent.getAggregate();
+                    });                
             });
         }, parent.interval);
     console.log('Temperature job started');
