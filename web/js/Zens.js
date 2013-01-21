@@ -74,7 +74,7 @@ function Zens() {
 
     this.drawTempGraph = function(tempDaily, elDaily, tempMonthly, elMonthly){
         zensPlot([tempDaily, elDaily], $("#elGraph"), ["C", "Kw/h"], [1, "hour"], "%H", timeHash.today, timeHash.tomorrow, 0, 30);
-        zensPlot([tempMonthly, elMonthly], $("#elGraphDay"), ["C", "Kw/h"], [1, "day"], "%d", timeHash.firstDayOfMonth, timeHash.nextMonth, 0, 80);
+        zensPlot([tempMonthly, elMonthly], $("#elGraphDay"), ["C", "Kw/h"], [1, "day"], "%d", timeHash.firstDayOfMonth, timeHash.nextMonth, 0, 100);
     };
 
 
