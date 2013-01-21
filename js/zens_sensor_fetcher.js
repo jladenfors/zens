@@ -48,9 +48,8 @@ function zens_sensor_fetcher(mongoHandle){
         );
     };
 
-    this.getT1Aggregate = (
-        function(){
-            self.mdb.query('temperature',
+    this.getT1Aggregate = function(success){
+            self.mdb.query(SysConf.tempdb,
                 function(collection) {
                     collection.find(
                         {
@@ -59,10 +58,10 @@ function zens_sensor_fetcher(mongoHandle){
                     ).sort([['date', 1]])
                         .toArray(function(err, docs) {
                             self.respData = docs;
+                            success(self.respData);
                         });
-                });
-            return JSON.stringify(self.respData);
-        });
+                });            
+        };
     
     return{
         get_t1 : this.getT1Aggregate,

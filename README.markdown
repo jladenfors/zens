@@ -18,4 +18,4 @@ Run "npm test" for mocha test cases, which should even work on your TeamCity ins
 * Separate jobs from  application
 * Make graphs for > 1 month durations
 * Separate system configuration from code
-* Buy raspberry camera and connect ;)
+* Buy raspberry pi compatible camera and connect ;)

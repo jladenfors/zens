@@ -1,15 +1,15 @@
 var path = require('path'), fs = require('fs');
 
 function zens_http_server(){
-    
-    var zensFetcher;    
-    
+
+    var zensFetcher;
+
     this.sensorFetcher = function(p_zensFetcher){
-        zensFetcher = p_zensFetcher;        
+        zensFetcher = p_zensFetcher;
     }
 
     this.zens_http = function(request, response) {
-        
+
         var filePath = '.' + request.url;
         if (filePath == './')
             filePath = './web/index.html';
@@ -59,12 +59,16 @@ function zens_http_server(){
             );
         }
         if (rest == '/getTemp'){
-            response.writeHead(200, { 'Content-Type': 'application/json' });
-            response.write(zensFetcher.get_t1());
-            response.end();
-        }        
+            zensFetcher.get_t1(
+                function(it){
+                    response.writeHead(200, { 'Content-Type': 'application/json' });
+                    response.write(JSON.stringify(it));
+                    response.end();
+                }
+            )
+        }
     }
-    
+
     return {
         httpServer: this.zens_http,
         sensorFetcher: this.sensorFetcher
