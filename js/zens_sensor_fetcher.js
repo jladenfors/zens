@@ -6,7 +6,7 @@ var SysConf = require('../js/system_conf').SystemConf;
 function zens_sensor_fetcher(mongoHandle){
     var self = this;
     this.mdb = mongoHandle;
-    this.price = 0;    
+    this.price = 0;
     this.respData = {};
 
     this.getPrice = function(success){
@@ -32,6 +32,9 @@ function zens_sensor_fetcher(mongoHandle){
                     }
                 ).sort([['date', 1]])
                     .toArray(function(err, docs) {
+                        if(err){
+                            console.log(err);
+                        }
                         self.respData.res = docs;
                         success();
                     });
@@ -49,20 +52,23 @@ function zens_sensor_fetcher(mongoHandle){
     };
 
     this.getT1Aggregate = function(success){
-            self.mdb.query(SysConf.tempdb,
-                function(collection) {
-                    collection.find(
-                        {
-                            date: { $gt: 0 }
+        self.mdb.query(SysConf.tempdb,
+            function(collection) {
+                collection.find(
+                    {
+                        date: { $gt: 0 }
+                    }
+                ).sort([['date', 1]])
+                    .toArray(function(err, docs) {
+                        console.log("docs " + docs);
+                        if(err){
+                            console.log(err);
                         }
-                    ).sort([['date', 1]])
-                        .toArray(function(err, docs) {
-                            self.respData = docs;
-                            success(self.respData);
-                        });
-                });            
-        };
-    
+                        success(docs);
+                    });
+            });
+    };
+
     return{
         get_t1 : this.getT1Aggregate,
         get_e1 : this.getE1Aggregate

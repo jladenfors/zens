@@ -29,7 +29,6 @@ function zens_http_server(){
         }
 
         fs.exists(filePath, function(exists) {
-
             if (exists) {
                 fs.readFile(filePath, function(error, content) {
                     if (error) {
@@ -43,30 +42,33 @@ function zens_http_server(){
                 });
             }
             else {
-                response.writeHead(404);
-                response.end();
+                var rest = request.url.split('?')[0];
+                if (rest == '/getEl'){
+                    zensFetcher.get_e1(
+                        function(it){
+                            console.log('get el' + it)
+                            response.writeHead(200, { 'Content-Type': 'application/json' });
+                            response.write(JSON.stringify(it));
+                            response.end();
+                        }
+                    );
+                }
+                else if (rest == '/getTemp'){
+                    zensFetcher.get_t1(
+                        function(it){
+                            console.log('get temp' + it)
+                            response.writeHead(200, { 'Content-Type': 'application/json' });
+                            response.write(JSON.stringify(it));
+                            response.end();
+                        }
+                    )
+                }
+                else {
+                    response.writeHead(404);
+                    response.end();
+                }
             }
         });
-
-        var rest = request.url.split('?')[0];
-        if (rest == '/getEl'){
-            zensFetcher.get_e1(
-                function(it){
-                    response.writeHead(200, { 'Content-Type': 'application/json' });
-                    response.write(JSON.stringify(it));
-                    response.end();
-                }
-            );
-        }
-        if (rest == '/getTemp'){
-            zensFetcher.get_t1(
-                function(it){
-                    response.writeHead(200, { 'Content-Type': 'application/json' });
-                    response.write(JSON.stringify(it));
-                    response.end();
-                }
-            )
-        }
     }
 
     return {
@@ -74,5 +76,6 @@ function zens_http_server(){
         sensorFetcher: this.sensorFetcher
     };
 }
+
 
 exports.ZensHttp = zens_http_server();
