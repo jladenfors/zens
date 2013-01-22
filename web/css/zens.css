@@ -1,0 +1,17 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+.sidebar-nav {
+    vertical-align: top;
+    padding: 9px 0;
+}
+
+@keyframes mymove
+{
+    0%   {top:0px;}
+    25%  {top:200px;}
+    50%  {top:100px;}
+    75%  {top:200px;}
+    100% {top:0px;}
+}

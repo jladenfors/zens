@@ -45,8 +45,7 @@ function zens_http_server(){
                 var rest = request.url.split('?')[0];
                 if (rest == '/getEl'){
                     zensFetcher.get_e1(
-                        function(it){
-                            console.log('get el' + it)
+                        function(it){                            
                             response.writeHead(200, { 'Content-Type': 'application/json' });
                             response.write(JSON.stringify(it));
                             response.end();
@@ -55,8 +54,7 @@ function zens_http_server(){
                 }
                 else if (rest == '/getTemp'){
                     zensFetcher.get_t1(
-                        function(it){
-                            console.log('get temp' + it)
+                        function(it){                            
                             response.writeHead(200, { 'Content-Type': 'application/json' });
                             response.write(JSON.stringify(it));
                             response.end();

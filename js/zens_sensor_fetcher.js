@@ -59,8 +59,7 @@ function zens_sensor_fetcher(mongoHandle){
                         date: { $gt: 0 }
                     }
                 ).sort([['date', 1]])
-                    .toArray(function(err, docs) {
-                        console.log("docs " + docs);
+                    .toArray(function(err, docs) {                        
                         if(err){
                             console.log(err);
                         }

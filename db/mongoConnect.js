@@ -39,4 +39,8 @@ MyMongo.prototype.query = function(collectionName, callback) {
     }
 }
 
+MyMongo.prototype.close = function() {
+    this.db.close();
+}
+
 exports.MyMongo = MyMongo;

@@ -10,6 +10,7 @@
         "redis-jsonify"     : "*",
         "ahr2" : "*",
         "jsdom" : "*",
+        "colors" : "*",
 	"mocha" : "*"
     },
     "scripts" : {
