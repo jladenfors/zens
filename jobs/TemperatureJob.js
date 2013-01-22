@@ -14,14 +14,22 @@ function TemperatureJob(mdb, sensorPath, sensorId){
     this.interval =  5*60000;
     this.respData = {};
 
-    this.insertData = function(data){
+    this.setData = function(data){
         self.mdb.query(SysConf.tempdb,
             function(collection) {
-                collection.insert({sensorId: self.sensorId, date: Math.round(new Date().getTime() / 1000) , data: data.trim()});
+                collection.insert({sensorId: self.sensorId, date: Math.round(new Date().getTime() / 1000) , data: safeTrim(data)});
             });
     }
 
-    this.readSensor = function(storeData) {
+    var safeTrim = function(data){        
+        if (data){
+            return data.trim();
+        }else {
+            return data;
+        }        
+    }
+    
+    this.getSensorData = function(storeData) {
         fs.readFile(self.sensorPath, 'utf-8' ,function (err, data)
         {
             storeData(data);
@@ -29,15 +37,15 @@ function TemperatureJob(mdb, sensorPath, sensorId){
     };
 
     this.run = function (){
-        setInterval(self.readSensor(self.insertData), self.interval);
+        setInterval(self.getSensorData(self.setData), self.interval);
         console.log('Temperature job started');
     };
 
     return {
         filesystem: this.fs,
-        readSensor : this.readSensor,
+        readSensor : this.getSensorData,
         start : this.run,
-        insertData : this.insertData
+        insertData : this.setData
     }
 }
 
