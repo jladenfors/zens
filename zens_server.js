@@ -22,14 +22,14 @@ var mdb = new MyMongo('127.0.0.1', 27017, 'zens',
         if (process.argv[2] === 'test'){
             port = 8022
             var elJob = new ElectricJob(mdb, "", 'el1');
-            elJob.insertData("100");
-            elJob.insertData("102");
-            elJob.insertData("103");
+            elJob.insertData("2100");
+            elJob.insertData("2102");
+            elJob.insertData("2103");
 
             var tempJob = new TemperatureJob(mdb, "", 't1');
-            tempJob.insertData("100");
-            tempJob.insertData("101");
-            tempJob.insertData("102");
+            tempJob.insertData("4100");
+            tempJob.insertData("3101");
+            tempJob.insertData("3102");
         }
 
         zens_http.sensorFetcher(new ZensBackend(mdb));

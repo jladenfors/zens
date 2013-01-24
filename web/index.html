@@ -15,7 +15,7 @@
     <title>El Zensor - All your sensors are belong to us! </title>
 </head>
 <body>
-<div ng-controller='ZensGraf' > <!-- our angular app is called "zens" -->
+<div ng-controller='ZensGraf' > <!-- our angular app is called "zens" -->    
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <zenshead/>
@@ -26,10 +26,7 @@
             <div class="span3">
                 <zensnav/>
             </div>
-            <div class="span9">
-                <zensgraf zensid="elGraph"></zensgraf>
-                <zensgraf zensid="elGraphDay"></zensgraf>
-            </div>
+            <zensgrafs/>          
         </div>
     </div>
 

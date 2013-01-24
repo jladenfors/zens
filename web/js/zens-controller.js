@@ -1,7 +1,5 @@
 function ZensGraf($scope) {
-    $scope.username = 'World';
-
-    $scope.sayHello = function() {
-        $scope.greeting = 'Hello ' + $scope.username + '!';
-    };
+    $scope.isGraf = false;
+    $scope.title = 'Lorem Ipsum';
+    $scope.text = 'Neque porro quisquam est qui dolorem ipsum quia dolor...';
 }
