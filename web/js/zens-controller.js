@@ -1,5 +1,13 @@
 function ZensGraf($scope) {
-    $scope.isGraf = false;
-    $scope.title = 'Some stuff';
-    $scope.text = 'Neque porro quisquam est qui dolorem ipsum quia dolor...';
+   $scope.sensorType = 'el'
+   
+    $scope.sensors =  function(sensor){        
+        if (sensor === 'e1'){
+            $scope.sensorType = 'el'
+        }else if (sensor === 't1'){
+            $scope.sensorType = 'temp'
+        }
+    }
+    
+    
 }

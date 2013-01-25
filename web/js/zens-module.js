@@ -12,7 +12,10 @@ angular.module('zens', []).
         return {
             restrict: 'E',
             transclude: true,
-            scope: { title: '@titles'},
+            scope: {
+                state:'@sensorType',
+                diagram: '&'
+            },
             templateUrl: '/web/partial/nav.html',
             replace: true
         };
@@ -21,7 +24,10 @@ angular.module('zens', []).
         return {
             restrict: 'E',
             transclude: true,
-            scope: { zensid: '@'},            
+            scope: { 
+                zensid: '@',
+                sensorId: '@'
+                },            
             templateUrl: '/web/partial/graf.html',
             replace: true
         };
@@ -29,6 +35,9 @@ angular.module('zens', []).
         return {
             restrict: 'E',            
             templateUrl: '/web/partial/grafs.html',
+            scope: {
+                grafType: '@'
+            },
             replace: true
         };
     });
