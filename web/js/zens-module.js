@@ -1,5 +1,6 @@
-angular.module('zens', []).
-    directive('zenshead', function() {
+
+
+app.directive('zenshead', function() {
         return {
             restrict: 'E',
             transclude: true,
@@ -41,3 +42,4 @@ angular.module('zens', []).
             replace: true
         };
     });
+

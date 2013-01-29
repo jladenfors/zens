@@ -77,6 +77,45 @@ function Zens() {
         zensPlot([tempMonthly, elMonthly], $("#elGraphDay"), ["C", "Kw/h"], [1, "day"], "%d", timeHash.firstDayOfMonth, timeHash.nextMonth, 0, 100);
     };
 
+    this.sensor_e1 = function(domId) {
+
+        var elhourDelta = {};
+        var eldayDelta = {};
+        
+          $.ajax({
+            type: "GET",
+            url: "/getEl",
+            async: false,
+            success: function(data){
+
+                var elhourHash = {};
+                var eldayHash = {};
+
+                data.res.forEach(
+                    function (reply, i) {
+                        var json = reply;
+                        var eventDate = that.zDate(json);
+                        if (new Date().getDate() == eventDate.getDate()){
+                            elhourHash[eventDate.getTime()] = json.data/1000;
+                        }
+                        if (new Date().getMonth() == eventDate.getMonth()) {
+                            eldayHash[eventDate.getTime()] = json.data/1000;
+                        }
+                    }
+                );
+
+                elhourDelta = that.calculateDelta(elhourHash);
+                eldayDelta = that.calculateDayDelta(eldayHash);
+                // Present daily price 
+                document.getElementById('price').innerHTML = "Compricer: " + data.price + " Kr/h";
+                document.getElementById('currprice').innerHTML = "Totalt idag: " +  that.priceCalculus(data.price, elhourDelta).toPrecision(2) + " Kr";
+                document.getElementById('monthprice').innerHTML = "Totalt denna m�nad: " +  that.priceCalculus(data.price, eldayDelta).toPrecision(6) + " Kr";
+            }
+        });
+
+        zensPlot([elDaily], $("#"+domId), ["C"], [1, "hour"], "%H", timeHash.today, timeHash.tomorrow, 0, 30);
+        zensPlot([elMonthly], $("#"+domId), ["C"], [1, "day"], "%d", timeHash.firstDayOfMonth, timeHash.nextMonth, 0, 120);
+    };
 
     /**
      * Calculate price of day intraday.
@@ -160,5 +199,9 @@ function Zens() {
     };
 
     this.formatDay = function (d ){ return (d.getDate() < 9) ? "0" + d.getDate() : d.getDate();};
+    
+    return {
+        sensor_e1 : this.sensor_e1
+    }
 
 }

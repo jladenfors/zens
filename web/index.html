@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html ng-app="zens">
-<head>    
+<head>
     <link rel="stylesheet" href="/web/css/bootstrap.css">
     <link href="web/css/zens.css" rel="stylesheet">
-    
-    <!-- Setup angular module and directives-->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
 
-    <script src="/web/js/zens-controller.js"></script>
+    <!-- Setup angular module and directives-->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+
+    <!-- <script src="/web/js/zens-controller.js"></script> -->
+    <script src="/web/js/znes.js"></script>
     <script src="/web/js/zens-module.js"></script>
-    
-    
+
     <!-- Use require to start application -->
-    <script data-main="web/js/main" src="./web/js/require-jquery.js"></script>        
-    
+  <!--  <script data-main="web/js/main" src="./web/js/require-jquery.js"></script> -->
+
     <title>El Zensor - All your sensors are belong to us! </title>
 </head>
 <body>
-<div ng-controller='ZensGraf' > <!-- our angular app is called "zens" -->    
+<div ng-controller='ZensGraf' > <!-- our angular app is called "zens" -->
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <zenshead/>
         </div>
-    </div>    
+    </div>
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span3">
                 <zensnav diagram="sensors(sensor)"/>
             </div>
-            <zensgrafs graf-type="{{sensorType}}"/>          
+            <zensgrafs graf-type="{{sensorType}}"/>
         </div>
     </div>
 </div>
