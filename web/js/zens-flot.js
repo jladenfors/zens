@@ -4,30 +4,29 @@ var zensPlot = function(dataArr, htmlTag, label, tickSize, timeFormat, minX, max
 
     var that = this;
 
-
     $.plot(htmlTag,  [
-{
-data: dataArr[0],
+        {
+            data: dataArr[0],
 
-                lines: { show: true },
-                label: label[0],
-                color: "#F80000",
-                highlightColor: "#800000",
-                shadowSize: 10,
-                points: { show: false }
-            
-},
-{
-	data: dataArr[1], 	
-                 lines: { show: true },
-                label: label[1],
-                color: "#180000",
-                highlightColor: "#800000",
-                shadowSize: 10,
-                points: { show: false }
-}],
-{
-  	legend: {
+            lines: { show: true },
+            label: label[0],
+            color: "#F80000",
+            highlightColor: "#800000",
+            shadowSize: 10,
+            points: { show: false }
+
+        },
+        {
+            data: dataArr[1],
+            lines: { show: true },
+            label: label[1],
+            color: "#180000",
+            highlightColor: "#800000",
+            shadowSize: 10,
+            points: { show: false }
+        }],
+        {
+            legend: {
                 show: true,
                 position: "ne",
                 labelBoxBorderColor: "white"
@@ -54,9 +53,9 @@ data: dataArr[0],
             },
             yaxis: {
                 min: minY,
-                max: maxY                
+                max: maxY
             }
-       } );
+        } );
 
     var previousPoint = null;
     $(htmlTag).bind("plothover", function (event, pos, item) {
@@ -88,23 +87,4 @@ data: dataArr[0],
             opacity: 0.80
         }).appendTo("body").fadeIn(200);
     }
-};
-
-var zensTimeHash = function(){
-    var timeHash = {};
-    var today = new Date();
-    today.setHours(0);
-    today.setMinutes(0);
-    var tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1);
-    var nextMonth = new Date(today.getFullYear(), today.getMonth()+1, today.getDate());
-    nextMonth.setDate(0);
-    var firstDayOfMonth = new Date();
-    firstDayOfMonth.setDate(0);
-    firstDayOfMonth.setHours(0);
-    firstDayOfMonth.setMinutes(1);
-    timeHash.today = today.getTime();
-    timeHash.tomorrow= tomorrow.getTime();
-    timeHash.nextMonth = nextMonth.getTime();
-    timeHash.firstDayOfMonth = firstDayOfMonth.getTime();
-    return timeHash;
 };

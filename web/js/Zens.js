@@ -6,9 +6,9 @@
  * Start by calling setup!
  */
 function Zens() {
-    var timeHash = zensTimeHash();
-
+        
     this.setup = function() {
+            
         // get handle to outer object
         var that = this;
 
@@ -63,9 +63,12 @@ function Zens() {
                 elhourDelta = that.calculateDelta(elhourHash);
                 eldayDelta = that.calculateDayDelta(eldayHash);
                 // Present daily price 
+               /*
                 document.getElementById('price').innerHTML = "Compricer: " + data.price + " Kr/h";
+                
                 document.getElementById('currprice').innerHTML = "Totalt idag: " +  that.priceCalculus(data.price, elhourDelta).toPrecision(2) + " Kr";
                 document.getElementById('monthprice').innerHTML = "Totalt denna m�nad: " +  that.priceCalculus(data.price, eldayDelta).toPrecision(6) + " Kr";
+                */
             }
         });
 
@@ -73,8 +76,8 @@ function Zens() {
     };
 
     this.drawTempGraph = function(tempDaily, elDaily, tempMonthly, elMonthly){
-        zensPlot([tempDaily, elDaily], $("#elGraph"), ["C", "Kw/h"], [1, "hour"], "%H", timeHash.today, timeHash.tomorrow, 0, 30);
-        zensPlot([tempMonthly, elMonthly], $("#elGraphDay"), ["C", "Kw/h"], [1, "day"], "%d", timeHash.firstDayOfMonth, timeHash.nextMonth, 0, 100);
+        zensPlot([tempDaily, elDaily], $("#elGraph"), ["C", "Kw/h"], [1, "hour"], "%H", this.zensTimeHash.today, this.zensTimeHash.tomorrow, 0, 30);
+        //zensPlot([tempMonthly, elMonthly], $("#elGraphDay"), ["C", "Kw/h"], [1, "day"], "%d", this.zensTimeHash.firstDayOfMonth, this.zensTimeHash.nextMonth, 0, 100);
     };
 
     this.sensor_e1 = function(domId) {
@@ -113,8 +116,8 @@ function Zens() {
             }
         });
 
-        zensPlot([elDaily], $("#"+domId), ["C"], [1, "hour"], "%H", timeHash.today, timeHash.tomorrow, 0, 30);
-        zensPlot([elMonthly], $("#"+domId), ["C"], [1, "day"], "%d", timeHash.firstDayOfMonth, timeHash.nextMonth, 0, 120);
+        zensPlot([elDaily], $("#"+domId), ["C"], [1, "hour"], "%H", this.zensTimeHash.today, this.zensTimeHash.tomorrow, 0, 30);
+        zensPlot([elMonthly], $("#"+domId), ["C"], [1, "day"], "%d", this.zensTimeHash.firstDayOfMonth, this.zensTimeHash.nextMonth, 0, 120);
     };
 
     /**
@@ -198,10 +201,29 @@ function Zens() {
         return d;
     };
 
-    this.formatDay = function (d ){ return (d.getDate() < 9) ? "0" + d.getDate() : d.getDate();};
-    
-    return {
-        sensor_e1 : this.sensor_e1
-    }
+    this.zensTimeHash = function(){
+        var timeHash = {};
+        var today = new Date();
+        today.setHours(0);
+        today.setMinutes(0);
+        var tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1);
+        var nextMonth = new Date(today.getFullYear(), today.getMonth()+1, today.getDate());
+        nextMonth.setDate(0);
+        var firstDayOfMonth = new Date();
+        firstDayOfMonth.setDate(0);
+        firstDayOfMonth.setHours(0);
+        firstDayOfMonth.setMinutes(1);
+        timeHash.today = today.getTime();
+        timeHash.tomorrow= tomorrow.getTime();
+        timeHash.nextMonth = nextMonth.getTime();
+        timeHash.firstDayOfMonth = firstDayOfMonth.getTime();
+        return timeHash;
+    };
 
+    this.formatDay = function (d ){ return (d.getDate() < 9) ? "0" + d.getDate() : d.getDate();};
+  
 }
+
+app.factory('zensFlot', function () {
+    return new Zens();    
+});

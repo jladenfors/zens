@@ -1,6 +1,4 @@
-
-
-app.directive('zenshead', function() {
+app.directive('zenshead', function() {    
         return {
             restrict: 'E',
             transclude: true,
