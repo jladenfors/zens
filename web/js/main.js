@@ -2,14 +2,15 @@ requirejs.config({
     shim: {
         'jquery.flot': [],
         'zens-flot': ['jquery.flot'],
-        'Zens': ['zens-flot'],
-        'zens-module': ['zens-main'],                
-        'zens-main': ['start'],
+        'zens-reader': ['zens-util', 'zens-flot'],
+        'zens-module': ['zens-controller'],                
+        'zens-controller': ['start'],
         'start': ['angular.min']
     }
 });
 
-require(['zens-module', 'Zens'], 
+require(['zens-module', 'zens-reader'], 
     function main() {
-        var $injector = angular.bootstrap(document, ['zens']);        
+        // Late bootstrap for require to work
+        angular.bootstrap(document, ['zens']);        
     });

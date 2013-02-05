@@ -1,30 +1,29 @@
-// This is the handle for our application, a global handle! 
-var app = angular.module('zens', []);
 
-// Define the module
-app.factory('zensPlot', function () {
-    return function(){
-        return "jonas";
-    }
+app.factory('zensGrafs', function () {
+    return new ZensReader(new ZensUtil());
 });
 
-var myModule = angular.module('myModule', []);
-myModule.factory('serviceId', function() {
-    var shinyNewServiceInstance;
-    //factory function body that constructs shinyNewServiceInstance
-    return shinyNewServiceInstance;
-});
-
-app.controller('ZensGraf',['$scope', 'zensPlot',
-    function (scope, zplot) {
-        scope.sensorType = 'el'
-
+app.controller('ZensGraf',['$scope', 'zensGrafs',
+    function (scope, zens) {
+        
+        scope.sensorId = 'elGraph'
+        
         scope.sensors =  function(sensor){
             if (sensor === 'e1'){
-                scope.sensorType = 'el'
+                scope.sensorId = 'elGraph'
+                zens.s_e1(scope.sensorId);
             }else if (sensor === 't1'){
-                scope.sensorType = 'temp'
-            }
+                scope.sensorId = 'elGraph'
+                zens.s_t1(scope.sensorId);
+            }            
         }
+
+        scope.onStartup = function(domid){
+            zens.s_e1(domid);
+        }
+               
     }
 ]);
+
+
+
