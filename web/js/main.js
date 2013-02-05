@@ -11,11 +11,5 @@ requirejs.config({
 
 require(['zens-module', 'Zens'], 
     function main() {
-        var $injector = angular.bootstrap(document, ['zens']);
-        
-        angular.element(document).ready(function () {        
-            var grafs = $injector.get('zensGrafs');
-           // grafs.setup();
-        });
-
+        var $injector = angular.bootstrap(document, ['zens']);        
     });

@@ -11,14 +11,13 @@
         <div class="navbar-inner">
             <zenshead/>
         </div>
-    </div>
-    <a href="#" ng-click="activate()">asdf</a>
+    </div>    
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span3">
                 <zensnav diagram="sensors(sensor)"/>
             </div>
-            <zensgrafs sensor-id="{{sensorId}}" active-graf="alerter(sensor)"/>
+            <zensgrafs sensor-id="{{sensorId}}" active-graf="onStartup(domid)"/>
         </div>
     </div>
 </div>

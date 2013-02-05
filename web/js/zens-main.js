@@ -6,18 +6,20 @@ app.factory('zensGrafs', function () {
 app.controller('ZensGraf',['$scope', 'zensGrafs',
     function (scope, zens) {
         
-        scope.sensorId = 'el'
+        scope.sensorId = 'elGraph'
         
-        scope.sensors =  function(sensor){            
+        scope.sensors =  function(sensor){
             if (sensor === 'e1'){
-                scope.sensorId = 'el'
+                scope.sensorId = 'elGraph'
+                zens.sensor_e1(scope.sensorId);
             }else if (sensor === 't1'){
-                scope.sensorId = 'temp'
-            }
+                scope.sensorId = 'elGraph'
+                zens.sensor_t1(scope.sensorId);
+            }            
         }
 
-        scope.alerter = function(){
-            zens.setup();
+        scope.onStartup = function(domid){
+            zens.sensor_e1(domid);
         }
                
     }

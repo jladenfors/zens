@@ -1,6 +1,6 @@
 
 
-var zensPlot = function(dataArr, htmlTag, label, tickSize, timeFormat, minX, maxX, minY, maxY){
+var zensPlot = function(dataArr, htmlTag, label, tickSize, timeFormat, minX, maxX, minY, maxY, color){
 
     var that = this;    
     $.plot(htmlTag,  [
@@ -9,8 +9,8 @@ var zensPlot = function(dataArr, htmlTag, label, tickSize, timeFormat, minX, max
 
             lines: { show: true },
             label: label[0],
-            color: "#F80000",
-            highlightColor: "#800000",
+            color: this.color,
+            highlightColor: this.color,
             shadowSize: 10,
             points: { show: false }
 

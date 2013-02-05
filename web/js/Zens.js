@@ -76,12 +76,14 @@ function Zens() {
     };
 
     this.drawTempGraph = function(tempDaily, elDaily, tempMonthly, elMonthly){
-        zensPlot([tempDaily, elDaily], $("#elGraph"), ["C", "Kw/h"], [1, "hour"], "%H", this.zensTimeHash.today, this.zensTimeHash.tomorrow, 0, 30);
-        //zensPlot([tempMonthly, elMonthly], $("#elGraphDay"), ["C", "Kw/h"], [1, "day"], "%d", this.zensTimeHash.firstDayOfMonth, this.zensTimeHash.nextMonth, 0, 100);
+        zensPlot([tempDaily, elDaily], $("#elGraph"), ["C", "Kw/h"], [1, "hour"], "%H", this.zensTimeHash.today, this.zensTimeHash.tomorrow, 0, 30, "#F80000");
+        zensPlot([tempMonthly, elMonthly], $("#elGraphDay"), ["C", "Kw/h"], [1, "day"], "%d", this.zensTimeHash.firstDayOfMonth, this.zensTimeHash.nextMonth, 0, 100);
     };
 
     this.sensor_e1 = function(domId) {
 
+        var that = this;
+        
         var elhourDelta = {};
         var eldayDelta = {};
         
@@ -116,8 +118,39 @@ function Zens() {
             }
         });
 
-        zensPlot([elDaily], $("#"+domId), ["C"], [1, "hour"], "%H", this.zensTimeHash.today, this.zensTimeHash.tomorrow, 0, 30);
-        zensPlot([elMonthly], $("#"+domId), ["C"], [1, "day"], "%d", this.zensTimeHash.firstDayOfMonth, this.zensTimeHash.nextMonth, 0, 120);
+        zensPlot([elhourDelta], $("#"+domId), ["Kw/h"], [1, "hour"], "%H", this.zensTimeHash.today, this.zensTimeHash.tomorrow, 0, 30, "#F999000");
+       // zensPlot([elMonthly], $("#"+domId), ["C"], [1, "day"], "%d", this.zensTimeHash.firstDayOfMonth, this.zensTimeHash.nextMonth, 0, 120);
+    };
+
+    this.sensor_t1 = function(domId) {
+
+        var that = this;
+        
+        var temphourHash = {};
+        var tempdayHash = {};        
+
+        $.ajax({
+            type: "GET",
+            url: "/getTemp",
+            async: false,
+            success: function(data){
+                data.forEach(
+                    function (reply, i) {
+                        var json = reply;
+                        var d = that.zDate(json);
+                        if (new Date().getDate() == d.getDate()){
+                            temphourHash[d.getTime()] = parseFloat(json.data).toFixed(1);
+                        }
+                        if (new Date().getMonth() == d.getMonth()) {
+                            tempdayHash[d.getTime()] = parseFloat(json.data).toFixed(1);
+                        }
+                    }
+                );
+            }
+        });
+
+        zensPlot([that.orderHashSets(temphourHash)], $("#"+domId), ["C"], [1, "hour"], "%H", this.zensTimeHash.today, this.zensTimeHash.tomorrow, 0, 30);
+        // zensPlot([elMonthly], $("#"+domId), ["C"], [1, "day"], "%d", this.zensTimeHash.firstDayOfMonth, this.zensTimeHash.nextMonth, 0, 120);
     };
 
     /**

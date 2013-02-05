@@ -19,34 +19,33 @@ app.directive('zenshead', function() {
             replace: true
         };
     }).
+    directive('zensgrafs', function() {
+        return {
+            restrict: 'E',
+            templateUrl: '/web/partial/grafs.html',
+            scope: {
+                sensorId: '@',
+                activeGraf: '&'
+            },
+            replace: true
+        };
+    }).
     directive('zensgraf', function() {
         return {
             restrict: 'E',
             transclude: true,
             scope: {
-                zensid: '@',
+                sid: '@',
                 sensorId: '@',
-                activeGraf: '&'
-            },            
-            templateUrl: '/web/partial/graf.html',            
+                activeCurrentGraf: '&'
+            },
+            templateUrl: '/web/partial/graf.html',
             compile: function link(scope, iElement, iAttrs, controller) {
                 return {
                     post: function postLink(scope, iElement, iAttrs, controller) {
-                        // Start graf! 
-                        scope.activeGraf();                       
+                        scope.activeCurrentGraf({domid: 'dont work'});
                     }
                 }
-            },
-            replace: true
-        };
-    }).directive('zensgrafs', function() {
-        return {
-            restrict: 'E',
-            templateUrl: '/web/partial/grafs.html',
-            require: '^ZensGraf',
-            scope: {
-                sensorId: '@',
-                activeGraf: '&'                
             },
             replace: true
         };

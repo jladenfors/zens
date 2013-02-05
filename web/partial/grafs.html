@@ -1,4 +1,6 @@
-<div class="span9">    
-    <zensgraf zensid="elGraph" sensor-id="{{sensorId}}" active-graf="activeGraf(sensor)"></zensgraf>
-    <zensgraf zensid="elGraphDay" sensor-id="{{sensorId}}"></zensgraf>
+<div class="span9">
+
+    {{sensorId}}
+    <zensgraf zensid="elGraph" sid="{{sensorId}}" active-current-graf="activeGraf({domid: sensorId})"></zensgraf>
+    <zensgraf zensid="elGraphDay" sid="{{sensorId}}"></zensgraf>
 </div>
