@@ -3,29 +3,22 @@
 <head>
     <link rel="stylesheet" href="/web/css/bootstrap.css">
     <link href="web/css/zens.css" rel="stylesheet">
-
-    <!-- Setup angular module and directives-->
-
-        
-
-    <!-- Use require to start application -->
-  
-
     <title>El Zensor - All your sensors are belong to us! </title>
 </head>
 <body>
-<div ng-controller='ZensGraf' > <!-- our angular app is called "zens" -->
+<div ng-controller='ZensGraf' >
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <zenshead/>
         </div>
     </div>
+    <a href="#" ng-click="activate()">asdf</a>
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span3">
                 <zensnav diagram="sensors(sensor)"/>
             </div>
-            <zensgrafs graf-type="{{sensorType}}"/>
+            <zensgrafs sensor-id="{{sensorId}}" active-graf="alerter(sensor)"/>
         </div>
     </div>
 </div>

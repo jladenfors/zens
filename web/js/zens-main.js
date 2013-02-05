@@ -5,16 +5,23 @@ app.factory('zensGrafs', function () {
 
 app.controller('ZensGraf',['$scope', 'zensGrafs',
     function (scope, zens) {
-        scope.sensorType = 'el'
-
-        scope.sensors =  function(sensor){
+        
+        scope.sensorId = 'el'
+        
+        scope.sensors =  function(sensor){            
             if (sensor === 'e1'){
-                scope.sensorType = 'el'
+                scope.sensorId = 'el'
             }else if (sensor === 't1'){
-                scope.sensorType = 'temp'
+                scope.sensorId = 'temp'
             }
         }
-        zens.setup();
+
+        scope.alerter = function(){
+            zens.setup();
+        }
+               
     }
 ]);
+
+
 

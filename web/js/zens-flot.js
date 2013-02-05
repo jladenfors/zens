@@ -2,8 +2,7 @@
 
 var zensPlot = function(dataArr, htmlTag, label, tickSize, timeFormat, minX, maxX, minY, maxY){
 
-    var that = this;
-
+    var that = this;    
     $.plot(htmlTag,  [
         {
             data: dataArr[0],

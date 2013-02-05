@@ -20,6 +20,7 @@ var mdb = new MyMongo('127.0.0.1', 27017, 'zens',
         var port = 80
 
         if (process.argv[2] === 'test'){
+            console.log('[TEST ENVIRONMENT]!'.magenta);
             port = 8022
             var elJob = new ElectricJob(mdb, "", 'el1');
             elJob.insertData("2100");

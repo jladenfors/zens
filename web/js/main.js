@@ -3,18 +3,19 @@ requirejs.config({
         'jquery.flot': [],
         'zens-flot': ['jquery.flot'],
         'Zens': ['zens-flot'],
-        'zens-main': ['zens-module', 'Zens'],                
-        'zens-module': ['start'],
+        'zens-module': ['zens-main'],                
+        'zens-main': ['start'],
         'start': ['angular.min']
     }
 });
 
-require([ 'zens-main'], 
-    function main() {               
-        app.factory('zensFlot', function () {
-            return new Zens();
+require(['zens-module', 'Zens'], 
+    function main() {
+        var $injector = angular.bootstrap(document, ['zens']);
+        
+        angular.element(document).ready(function () {        
+            var grafs = $injector.get('zensGrafs');
+           // grafs.setup();
         });
-        // delayed bootstrap of anuglar
-        angular.bootstrap(document, ['zens']);
 
     });

@@ -223,7 +223,3 @@ function Zens() {
     this.formatDay = function (d ){ return (d.getDate() < 9) ? "0" + d.getDate() : d.getDate();};
   
 }
-
-app.factory('zensFlot', function () {
-    return new Zens();    
-});
