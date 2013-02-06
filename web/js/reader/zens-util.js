@@ -99,7 +99,20 @@ function ZensUtil() {
         timeHash.nextMonth = nextMonth.getTime();
         timeHash.firstDayOfMonth = firstDayOfMonth.getTime();
         return timeHash;
-    };
+    }
+
+
+    var idCreator = function(domId, suffix){
+        return "#"+domId+suffix
+    }
+
+    var elHandle = function(data){
+        return data/1000;
+    }
+
+    var tempHandle = function(data){
+        return parseFloat(data).toFixed(1)
+    }
 
     return {
         priceCalculus: priceCalculus,
@@ -107,6 +120,9 @@ function ZensUtil() {
         calculateDelta: calculateDelta,
         orderHashSets: orderHashSets,
         zDate: zDate,
+        idCreator: idCreator,
+        elHandle: elHandle,
+        tempHandle: tempHandle,
         zensTimeHash: zensTimeHash
     }
 

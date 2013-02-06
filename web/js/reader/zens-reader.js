@@ -3,20 +3,20 @@
  *
  * 2012, Jonas
  */
-function ZensReader(util,  $http ) {
+function ZensReader(util,  $http, plotter) {
 
     /**
      * Popluate sensor e1
-     * @param domId
+     * @param domId the dom to plot to, remember that the dom needs to be finished before plotting.
      */
     var sensor_e1 = function(domId) {
 
         $http.get("/getEl").success(
             function(data) {
                 // Plot graf per day
-                zensPlot(
-                    [util.calculateDelta(parseDataPerHour(data.res, elHandle))],
-                    $(idCreator(domId, "Day")),
+                plotter.plot(
+                    [util.calculateDelta(parseDataPerHour(data.res, util.elHandle))],
+                    $(util.idCreator(domId, "Day")),
                     ["Kw/h"],
                     [1, "hour"],
                     "%H",
@@ -26,9 +26,9 @@ function ZensReader(util,  $http ) {
                     30,
                     "#F999000");
                 // Plot graf per month
-                zensPlot(
-                    [util.calculateDayDelta(parseDataPerDay(data.res, elHandle))],
-                    $(idCreator(domId, "Month")),
+                plotter.plot(
+                    [util.calculateDayDelta(parseDataPerDay(data.res, util.elHandle))],
+                    $(util.idCreator(domId, "Month")),
                     ["Kw/h"],
                     [1, "day"],
                     "%d",
@@ -44,6 +44,39 @@ function ZensReader(util,  $http ) {
                  document.getElementById('monthprice').innerHTML = "Totalt denna m?nad: " +  util.priceCalculus(data.price, eldayDelta).toPrecision(6) + " Kr";
                  */
 
+            });
+    };
+
+    /**
+    * Popluate sensor t1
+    * @param domId the dom to plot to, remember that the dom needs to be finished before plotting.
+    */
+    var sensor_t1 = function(domId) {
+
+        $http.get("/getTemp").success(
+            function(data){
+                plotter.plot(
+                    [util.orderHashSets(parseDataPerHour(data, util.tempHandle))],
+                    $(util.idCreator(domId, "Day")),
+                    ["C"],
+                    [1, "hour"],
+                    "%H",
+                    util.zensTimeHash.today,
+                    util.zensTimeHash.tomorrow,
+                    0,
+                    30,
+                    '#fff000');
+                plotter.plot(
+                    [util.orderHashSets(parseDataPerDay(data, util.tempHandle))],
+                    $(util.idCreator(domId, "Month")),
+                    ["C"],
+                    [1, "day"],
+                    "%d",
+                    util.zensTimeHash.today,
+                    util.zensTimeHash.tomorrow,
+                    0,
+                    30,
+                    '#fff000');
             });
     };
 
@@ -74,49 +107,7 @@ function ZensReader(util,  $http ) {
         );
         return dayHash;
     };
-
-    var idCreator = function(domId, suffix){
-        return "#"+domId+suffix
-    }
-
-    var elHandle = function(data){
-        return data/1000;
-    }
-
-    var tempHandle = function(data){
-        return parseFloat(data).toFixed(1)
-    }
-
-    var sensor_t1 = function(domId) {
-
-        $http.get("/getTemp").success(
-            function(data){                
-                zensPlot(
-                    [util.orderHashSets(parseDataPerHour(data, tempHandle))],
-                    $(idCreator(domId, "Day")),
-                    ["C"], 
-                    [1, "hour"], 
-                    "%H", 
-                    util.zensTimeHash.today, 
-                    util.zensTimeHash.tomorrow, 
-                    0, 
-                    30,
-                    '#fff000');                
-                zensPlot(
-                    [util.orderHashSets(parseDataPerHour(data, tempHandle))],
-                    $(idCreator(domId, "Month")),
-                    ["C"], 
-                    [1, "hour"], 
-                    "%H", 
-                    util.zensTimeHash.today, 
-                    util.zensTimeHash.tomorrow, 
-                    0, 
-                    30, 
-                    '#fff000');
-            });
-    };
-
-
+    
     return {
         s_e1: sensor_e1,
         s_t1: sensor_t1
