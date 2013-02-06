@@ -25,3 +25,16 @@
 </html>
 
 <script data-main="web/js/main" src="./web/js/lib/require-jquery.js"></script>
+        
+        <script>
+            $(function() {
+                $(".nav li").click(function() {
+                    $(".nav li").removeClass('active');
+                    setTimeout(function() {
+                        var page = $.QueryString("page");
+                        $(".nav li:eq(" + page + ")").addClass("active");
+                    }, 50);
+
+                });
+            });
+        </script>

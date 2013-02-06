@@ -26,6 +26,7 @@ app.controller('ZensGraf',['$scope', 'zensGrafs',
         }
         
         scope.onStartup = function(domid){
+            console.log(domid)
             zens.s_e1(domid);
         }
                

@@ -11,6 +11,7 @@ function ZensReader(util,  $http, plotter) {
      */
     var sensor_e1 = function(domId) {
 
+        
         $http.get("/getEl").success(
             function(data) {
                 // Plot graf per day
@@ -25,6 +26,7 @@ function ZensReader(util,  $http, plotter) {
                     0,
                     10,
                     "#F999000");
+                
                 // Plot graf per month
                 plotter.plot(
                     [util.calculateDayDelta(parseDataPerDay(data.res, util.elHandle))],

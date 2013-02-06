@@ -3,7 +3,8 @@ var SysConf = require('../js/system_conf').SystemConf;
 /**
  * Read the electric sensor, this to be invoked using "new"
  */
-function zens_sensor_fetcher(mongoHandle){
+function zens_sensor_fetcher(mongoHandle)
+{
     var self = this;
     this.mdb = mongoHandle;
     this.price = 0;
@@ -15,8 +16,8 @@ function zens_sensor_fetcher(mongoHandle){
                 collection.findOne(
                     {
                         date: { $gt: 0}
-                    }
-                    , function(err, doc) {
+                    }, 
+                    function(err, doc) {
                         self.respData.price = doc;
                         success;
                     })
@@ -57,7 +58,7 @@ function zens_sensor_fetcher(mongoHandle){
                 }
             )
         );
-    };
+    }
 
     this.getT1Aggregate = function(success){
         self.mdb.query(SysConf.tempdb,
