@@ -1,15 +1,16 @@
 requirejs.config({
     shim: {
-        'jquery.flot': [],
-        'zens-flot': ['jquery.flot'],
-        'zens-reader': ['zens-util', 'zens-flot'],
+        'lib/jquery.flot': [],
+        'reader/zens-flot': ['lib/jquery.flot'],
+        'reader/zens-util': [],
+        'reader/zens-reader': ['reader/zens-util', 'reader/zens-flot'],
         'zens-module': ['zens-controller'],                
         'zens-controller': ['start'],
-        'start': ['angular.min']
+        'start': ['lib/angular.min']
     }
 });
 
-require(['zens-module', 'zens-reader'], 
+require(['zens-module', 'reader/zens-reader'], 
     function main() {
         // Late bootstrap for require to work
         angular.bootstrap(document, ['zens']);        

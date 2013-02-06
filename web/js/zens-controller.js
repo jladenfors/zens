@@ -1,7 +1,10 @@
-
-app.factory('zensGrafs', function () {
-    return new ZensReader(new ZensUtil());
+app.factory('zensUtil', function(){
+    return new ZensUtil();
 });
+
+app.factory('zensGrafs', ['zensUtil', '$http', function (zensUtil, http) {    
+    return new ZensReader(zensUtil, http);
+}]);
 
 app.controller('ZensGraf',['$scope', 'zensGrafs',
     function (scope, zens) {
