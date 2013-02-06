@@ -84,7 +84,7 @@ function ZensReader(util,  $http ) {
     }
 
     var tempHandle = function(data){
-        parseFloat(data).toFixed(1)
+        return parseFloat(data).toFixed(1)
     }
 
     var sensor_t1 = function(domId) {

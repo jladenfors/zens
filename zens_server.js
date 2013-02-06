@@ -28,12 +28,12 @@ var mdb = new MyMongo('127.0.0.1', 27017, 'zens',
             elJob.insertData("2103");
 
             var tempJob = new TemperatureJob(mdb, "", 't1');
-            tempJob.insertData("4100");
-            tempJob.insertData("3101");
-            tempJob.insertData("3102");
-            tempJob.insertData("2100");
-            tempJob.insertData("2102");
-            tempJob.insertData("2103");
+            tempJob.insertData("14");
+            tempJob.insertData("31");
+            tempJob.insertData("31");
+            tempJob.insertData("21");
+            tempJob.insertData("21");
+            tempJob.insertData("21");
         }
 
         zens_http.sensorFetcher(new ZensBackend(mdb));
