@@ -23,7 +23,7 @@ function ZensReader(util,  $http, plotter) {
                     util.zensTimeHash.today,
                     util.zensTimeHash.tomorrow,
                     0,
-                    30,
+                    10,
                     "#F999000");
                 // Plot graf per month
                 plotter.plot(
@@ -34,7 +34,7 @@ function ZensReader(util,  $http, plotter) {
                     "%d",
                     util.zensTimeHash.firstDayOfMonth,
                     util.zensTimeHash.nextMonth,
-                    0,
+                    40,
                     120,
                     "#111000");
 
@@ -63,7 +63,7 @@ function ZensReader(util,  $http, plotter) {
                     "%H",
                     util.zensTimeHash.today,
                     util.zensTimeHash.tomorrow,
-                    0,
+                    10,
                     30,
                     '#fff000');
                 plotter.plot(
@@ -74,7 +74,7 @@ function ZensReader(util,  $http, plotter) {
                     "%d",
                     util.zensTimeHash.today,
                     util.zensTimeHash.tomorrow,
-                    0,
+                    10,
                     30,
                     '#fff000');
             });
