@@ -5,6 +5,8 @@ function ZensPlot(){
 
     var plotFunc = function(dataArr, htmlTag, label, tickSize, timeFormat, minX, maxX, minY, maxY, color){
 
+        var previousPoint = null;
+        
         $.plot(htmlTag,  [
             {
                 data: dataArr[0],
@@ -48,8 +50,7 @@ function ZensPlot(){
                     max: maxY
                 }
             } );
-
-        var previousPoint = null;
+        
         $(htmlTag).bind("plothover", function (event, pos, item) {
             $("#x").text(pos.x.toFixed(2));
             $("#y").text(pos.y.toFixed(2));
@@ -68,7 +69,6 @@ function ZensPlot(){
         });
 
     }
-
 
     var showTooltip =  function showTooltip(x, y, contents) {
         $('<div id="tooltip">' + contents + '</div>').css( {

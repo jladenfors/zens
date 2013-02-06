@@ -23,12 +23,20 @@ function zens_sensor_fetcher(mongoHandle){
             });
     }
 
+    this.getStartOfDate = function(){
+        var firstDayOfMonth = new Date();
+        firstDayOfMonth.setDate(0);
+        firstDayOfMonth.setHours(0);
+        firstDayOfMonth.setMinutes(1);
+        return firstDayOfMonth.getTime()    
+    }
+    
     this.getElectric = function(success){
         self.mdb.query(SysConf.eldb,
-            function(collection) {
+            function(collection) {                                
                 collection.find(
                     {
-                        date: { $gt: 0}
+                        date: { $gt: self.getStartOfDate()}
                     }
                 ).sort([['date', 1]])
                     .toArray(function(err, docs) {
@@ -54,9 +62,10 @@ function zens_sensor_fetcher(mongoHandle){
     this.getT1Aggregate = function(success){
         self.mdb.query(SysConf.tempdb,
             function(collection) {
+                console.log()
                 collection.find(
                     {
-                        date: { $gt: 0 }
+                        date: { $gt: self.getStartOfDate() }
                     }
                 ).sort([['date', 1]])
                     .toArray(function(err, docs) {                        

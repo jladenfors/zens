@@ -44,9 +44,7 @@ function zens_http_server(){
             }
             else {
                 var rest = request.url.split('?')[0];
-                if (rest == '/getEl'){
-                    
-                    
+                if (rest == '/getEl'){                                       
                     zensFetcher.get_e1(
                         function(it){                            
                             response.writeHead(200, { 'Content-Type': 'application/json' });
