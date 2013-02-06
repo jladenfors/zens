@@ -27,8 +27,8 @@ function zens_sensor_fetcher(mongoHandle){
         var firstDayOfMonth = new Date();
         firstDayOfMonth.setDate(0);
         firstDayOfMonth.setHours(0);
-        firstDayOfMonth.setMinutes(1);
-        return firstDayOfMonth.getTime()    
+        firstDayOfMonth.setMinutes(1);                
+        return Math.round(firstDayOfMonth.getTime() / 1000)    
     }
     
     this.getElectric = function(success){
