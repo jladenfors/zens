@@ -15,7 +15,7 @@ Run "npm test" for mocha test cases, which should even work on your TeamCity ins
 * Use the init.d scripts to start the client app and the job runner.
 
 #Todo
-* Separate jobs from  application
+-- Separate jobs from  application 
 * Make graphs for > 1 month durations
 * Separate system configuration from code
 * Buy raspberry pi compatible camera and connect ;)
