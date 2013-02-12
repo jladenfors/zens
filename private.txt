@@ -1,0 +1,4 @@
+Amnesia
+
+Measure Mongo queries:
+var a=Date.now();db.electric.find({ date: { $gt: 135867958}}, {data: 1, date: 1, _id: 0} ).limit(750).sort([['date', 0]]).forEach(function(){});Date.now()-a;

@@ -9,6 +9,7 @@ function zens_sensor_fetcher(mongoHandle)
     this.mdb = mongoHandle;
     this.price = 0;
     this.respData = {};
+    var fetch_limit = 7500; // Around 7500 measurepoints is the amount of measure pointes a month,
 
     this.getPrice = function(success){
         self.mdb.query('price',
@@ -16,7 +17,7 @@ function zens_sensor_fetcher(mongoHandle)
                 collection.findOne(
                     {
                         date: { $gt: 0}
-                    }, 
+                    },
                     function(err, doc) {
                         self.respData.price = doc;
                         success;
@@ -34,12 +35,18 @@ function zens_sensor_fetcher(mongoHandle)
     
     this.getElectric = function(success){
         self.mdb.query(SysConf.eldb,
-            function(collection) {                                
+            function(collection) {
                 collection.find(
                     {
                         date: { $gt: self.getStartOfDate()}
+                    },
+                    {
+                        data: 1,
+                        _id: 0
                     }
-                ).sort([['date', 1]])
+                )
+                    .limit(fetch_limit)
+                    .sort([['date', 1]])
                     .toArray(function(err, docs) {
                         if(err){
                             console.log(err);
@@ -67,9 +74,15 @@ function zens_sensor_fetcher(mongoHandle)
                 collection.find(
                     {
                         date: { $gt: self.getStartOfDate() }
+                    },
+                    {
+                        data: 1,
+                        _id: 0
                     }
-                ).sort([['date', 1]])
-                    .toArray(function(err, docs) {                        
+                )
+                    .limit(fetch_limit)
+                    .sort([['date', 1]])
+                    .toArray(function(err, docs) {
                         if(err){
                             console.log(err);
                         }
