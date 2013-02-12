@@ -6,8 +6,6 @@
     "description": "a waste of time",    
     "dependencies" : {
         "mongodb"   :  "*",
-        "redis"     : "*",
-        "redis-jsonify"     : "*",
         "ahr2" : "*",
         "jsdom" : "*",
         "colors" : "*",
