@@ -42,6 +42,7 @@ function zens_sensor_fetcher(mongoHandle)
                     },
                     {
                         data: 1,
+                        date: 1,
                         _id: 0
                     }
                 )
@@ -77,6 +78,7 @@ function zens_sensor_fetcher(mongoHandle)
                     },
                     {
                         data: 1,
+                        date: 1,
                         _id: 0
                     }
                 )
