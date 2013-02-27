@@ -11,7 +11,7 @@
         <div class="navbar-inner">
             <zenshead/>
         </div>
-    </div>    
+    </div>
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span3">
@@ -25,16 +25,24 @@
 </html>
 
 <script data-main="web/js/main" src="./web/js/lib/require-jquery.js"></script>
-        
-        <script>
-            $(function() {
-                $(".nav li").click(function() {
-                    $(".nav li").removeClass('active');
-                    setTimeout(function() {
-                        var page = $.QueryString("page");
-                        $(".nav li:eq(" + page + ")").addClass("active");
-                    }, 50);
 
-                });
-            });
-        </script>
+<script>
+    $(function() {
+        $(".nav li").click(function() {
+            $(".nav li").removeClass('active');
+            setTimeout(function() {
+                var page = $.QueryString("page");
+                $(".nav li:eq(" + page + ")").addClass("active");
+            }, 50);
+
+        });
+    });
+
+    function supports_html5_storage() {
+        try {
+            return 'localStorage' in window && window['localStorage'] !== null;
+        } catch (e) {
+            return false;
+        }
+    }
+</script>
