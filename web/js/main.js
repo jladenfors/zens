@@ -4,7 +4,7 @@ requirejs.config({
         'reader/zens-flot': ['lib/jquery.flot'],
         'reader/zens-util': [],
         'reader/zens-reader': ['reader/zens-util', 'reader/zens-flot'],
-        'zens-module': ['zens-controller'],                
+        'zens-module': ['zens-controller', 'reader/zens-reader'],                
         'zens-controller': ['start'],
         'start': ['lib/angular.min']
     }
