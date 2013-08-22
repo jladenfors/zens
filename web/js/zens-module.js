@@ -10,11 +10,7 @@ app.directive('zenshead', function() {
     directive('zensnav', function() {
         return {
             restrict: 'E',
-            transclude: true,
-            scope: {
-                state:'@sensorType',
-                diagram: '&'
-            },
+            transclude: true,            
             templateUrl: '/web/partial/nav.html',
             replace: true
         };
@@ -22,31 +18,18 @@ app.directive('zenshead', function() {
     directive('zensgrafs', function() {
         return {
             restrict: 'E',
-            templateUrl: '/web/partial/grafs.html',
-            scope: {
-                sensorId: '@',
-                activeGraf: '&'
-            },
+            templateUrl: '/web/partial/grafs.html',                        
             replace: true
         };
     }).
     directive('zensgraf', function() {
         return {
             restrict: 'E',
-            transclude: true,
+            transclude: true,            
             scope: {
-                sid: '@',
-                sensorId: '@',
-                activeCurrentGraf: '&'
+                grafId: '@'                
             },
-            templateUrl: '/web/partial/graf.html',
-            compile: function link(scope, iElement, iAttrs, controller) {
-                return {
-                    post: function postLink(scope, iElement, iAttrs, controller) {
-                        scope.activeCurrentGraf({domid: 'dont work'});
-                    }
-                }
-            },
+            templateUrl: '/web/partial/graf.html',            
             replace: true
         };
     });

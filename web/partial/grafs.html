@@ -1,4 +1,5 @@
 <div class="span9">
-    <zensgraf sid="{{sensorId}}Day" active-current-graf="activeGraf({domid: sensorId})"></zensgraf>
-    <zensgraf sid="{{sensorId}}Month"  active-current-graf="activeGraf({domid: sensorId})"></zensgraf>
+    <!-- declare any number of graphs per sensor -->
+    <zensgraf graf-id="{{parameters.sensorId}}Day"/>
+    <zensgraf graf-id="{{parameters.sensorId}}Month"/>
 </div>
